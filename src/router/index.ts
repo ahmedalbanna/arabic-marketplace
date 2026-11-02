@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../pages/HomeView.vue'
+import ResponsiveLayout from '../components/ResponsiveLayout.vue'
 import ProductView from '../pages/ProductView.vue'
 import CartView from '../pages/CartView.vue'
 import CheckoutView from '../pages/CheckoutView.vue'
 import VendorDashboard from '../pages/VendorDashboard.vue'
-import DesktopHome from '../pages/DesktopHome.vue'
 import Explore from '../pages/Explore.vue'
 
 const router = createRouter({
@@ -13,12 +12,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/desktop',
-      name: 'desktop-home',
-      component: DesktopHome
+      component: ResponsiveLayout
     },
     {
       path: '/product/:id',
