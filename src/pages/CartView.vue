@@ -1,42 +1,46 @@
 <template>
   <div class="cart">
+    <!-- Header -->
     <header class="header">
-      <button @click="goBack">←</button>
-      <h1>سلة التسوق</h1>
-      <div></div>
+      <button class="back-btn" @click="goBack">←</button>
+      <h1 class="page-title">سلة التسوق</h1>
+      <div class="header-spacer"></div>
     </header>
 
+    <!-- Cart Items -->
     <div class="cart-items">
       <div class="cart-item" v-for="item in cartItems" :key="item.id">
-        <img :src="item.image" :alt="item.name" />
+        <img :src="item.image" :alt="item.name" class="item-image" />
         <div class="item-details">
           <p class="item-name">{{ item.name }}</p>
-          <p class="item-price">{{ item.price }} ر.ي</p>
-          <div class="quantity">
-            <button @click="decrease(item)">-</button>
-            <span>{{ item.quantity }}</span>
-            <button @click="increase(item)">+</button>
+          <p class="item-price">{{ item.price.toLocaleString() }} ر.ي</p>
+          <div class="quantity-control">
+            <button class="qty-btn" @click="decrease(item)">−</button>
+            <span class="qty-value">{{ item.quantity }}</span>
+            <button class="qty-btn" @click="increase(item)">+</button>
           </div>
         </div>
-        <button class="remove" @click="remove(item)">🗑️</button>
+        <button class="remove-btn" @click="remove(item)">🗑️</button>
       </div>
     </div>
 
+    <!-- Order Summary -->
     <div class="summary">
       <div class="summary-row">
         <span>المجموع الفرعي</span>
-        <span>{{ subtotal }} ر.ي</span>
+        <span>{{ subtotal.toLocaleString() }} ر.ي</span>
       </div>
       <div class="summary-row">
         <span>التوصيل</span>
-        <span>5000 ر.ي</span>
+        <span>5,000 ر.ي</span>
       </div>
       <div class="summary-row total">
         <span>الإجمالي</span>
-        <span>{{ total }} ر.ي</span>
+        <span>{{ total.toLocaleString() }} ر.ي</span>
       </div>
     </div>
 
+    <!-- Checkout Button -->
     <button class="checkout-btn" @click="goToCheckout">إتمام الطلب</button>
   </div>
 </template>
@@ -50,8 +54,8 @@ const goBack = () => router.back()
 const goToCheckout = () => router.push('/checkout')
 
 const cartItems = ref([
-  { id: 1, name: 'هاتف سامسونج جالكسي', price: 450000, quantity: 1, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200' },
-  { id: 2, name: 'سماعات بلوتوث', price: 35000, quantity: 2, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200' },
+  { id: 1, name: 'هاتف سامسونج جالاكسي S24', price: 150000, quantity: 1, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200' },
+  { id: 2, name: 'سماعات لاسلكية برو', price: 12000, quantity: 2, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200' },
 ])
 
 const increase = (item: any) => item.quantity++
@@ -64,7 +68,7 @@ const total = computed(() => subtotal.value + 5000)
 
 <style scoped>
 .cart {
-  padding-bottom: 100px;
+  padding-bottom: 90px;
   background-color: var(--color-surface);
   min-height: 100vh;
 }
@@ -78,16 +82,21 @@ const total = computed(() => subtotal.value + 5000)
   border-bottom: 1px solid var(--color-border);
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.header button {
+.back-btn {
   background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.header-spacer {
+  width: 40px;
 }
 
 .cart-items {
@@ -99,7 +108,7 @@ const total = computed(() => subtotal.value + 5000)
 
 .cart-item {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   background-color: var(--color-surface-container-lowest);
   padding: var(--space-sm);
   border-radius: var(--radius-lg);
@@ -107,11 +116,12 @@ const total = computed(() => subtotal.value + 5000)
   align-items: center;
 }
 
-.cart-item img {
+.item-image {
   width: 80px;
   height: 80px;
   object-fit: cover;
   border-radius: var(--radius-default);
+  flex-shrink: 0;
 }
 
 .item-details {
@@ -121,6 +131,11 @@ const total = computed(() => subtotal.value + 5000)
 .item-name {
   margin: 0 0 var(--space-xs) 0;
   font-size: 0.9rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .item-price {
@@ -129,26 +144,34 @@ const total = computed(() => subtotal.value + 5000)
   font-weight: 600;
 }
 
-.quantity {
+.quantity-control {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
 }
 
-.quantity button {
-  width: 25px;
-  height: 25px;
+.qty-btn {
+  width: 30px;
+  height: 30px;
   border: 1px solid var(--color-border);
   background: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  font-size: 1rem;
+  font-family: var(--font-family);
 }
 
-.remove {
+.qty-value {
+  min-width: 20px;
+  text-align: center;
+}
+
+.remove-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  flex-shrink: 0;
 }
 
 .summary {
@@ -163,6 +186,7 @@ const total = computed(() => subtotal.value + 5000)
   display: flex;
   justify-content: space-between;
   margin-bottom: var(--space-sm);
+  font-size: 0.9rem;
 }
 
 .summary-row.total {
@@ -183,6 +207,9 @@ const total = computed(() => subtotal.value + 5000)
   border-radius: var(--radius-default);
   font-family: var(--font-family);
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
 }
 </style>
+EOF
+echo "done"

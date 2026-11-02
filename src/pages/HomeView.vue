@@ -471,3 +471,5 @@ const addToCart = () => {
   color: var(--color-primary);
 }
 </style>
+EOF
+echo "done"
