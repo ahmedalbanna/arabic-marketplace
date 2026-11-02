@@ -1,15 +1,28 @@
 <template>
-  <div class="explore">
-    <!-- Header -->
-    <header class="header">
-      <button class="back-btn" @click="goBack">←</button>
-      <h1 class="page-title">استكشاف</h1>
-      <div class="header-spacer"></div>
+  <div class="bg-surface font-body-md text-body-md text-text-primary flex flex-col min-h-screen">
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe">
+      <div class="h-16 px-margin flex items-center justify-between">
+        <div class="flex items-center gap-space-sm">
+          <button
+            aria-label="رجوع"
+            class="w-11 h-11 flex items-center justify-center text-text-primary hover:text-primary transition-colors"
+            onclick="history.back()"
+          >
+            <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+          </button>
+          <h1 class="page-title">استكشاف</h1>
+          <div class="w-11 h-11"></div>
+        </div>
+      </div>
     </header>
 
-    <!-- Categories Grid -->
     <div class="categories-grid">
-      <div class="category-card" v-for="cat in categories" :key="cat.id" @click="goToCategory(cat.name)">
+      <div
+        v-for="cat in categories"
+        :key="cat.id"
+        class="category-card"
+        @click="goToCategory(cat.name)"
+      >
         <div class="category-icon">{{ cat.icon }}</div>
         <p class="category-name">{{ cat.name }}</p>
       </div>
@@ -23,54 +36,21 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const goBack = () => router.back()
-const goToCategory = (name: string) => {
-  alert(`عرض منتجات قسم: ${name}`)
-}
+const goToCategory = (name: string) => alert(`عرض منتجات قسم: ${name}`)
 
 const categories = ref([
   { id: 1, name: 'إلكترونيات', icon: '📱' },
   { id: 2, name: 'أزياء وملابس', icon: '👕' },
-  { id: 3, name: 'منتجات بلدية وعسل يمني', icon: '🍯' },
+  { id: 3, name: 'عسل ومنتجات بلدية', icon: '🍯' },
   { id: 4, name: 'بن يمني أصيل', icon: '☕' },
   { id: 5, name: 'عطور وبخور', icon: '💄' },
-  { id: 6, name: 'مستلزمات المنزل', icon: '🏠' },
+  { id: 6, name: 'مستلزمات منزل', icon: '🏠' },
   { id: 7, name: 'أدوات ومعدات', icon: '🔧' },
   { id: 8, name: 'كتب وثقافة', icon: '📚' },
 ])
 </script>
 
 <style scoped>
-.explore {
-  background-color: var(--color-surface);
-  min-height: 100vh;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-md);
-  background-color: var(--color-surface-container-lowest);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.back-btn {
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
-}
-
-.page-title {
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
-.header-spacer {
-  width: 40px;
-}
-
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -106,5 +86,3 @@ const categories = ref([
   color: var(--color-text-primary);
 }
 </style>
-EOF
-echo "done"

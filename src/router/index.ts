@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ResponsiveLayout from '../components/ResponsiveLayout.vue'
-import ProductView from '../pages/ProductView.vue'
-import CartView from '../pages/CartView.vue'
-import CheckoutView from '../pages/CheckoutView.vue'
-import VendorDashboard from '../pages/VendorDashboard.vue'
-import Explore from '../pages/Explore.vue'
+import ResponsiveLayout from '@/components/ResponsiveLayout.vue'
+import ProductView from '@/pages/ProductView.vue'
+import CartView from '@/pages/CartView.vue'
+import CheckoutView from '@/pages/CheckoutView.vue'
+import VendorDashboard from '@/pages/VendorDashboard.vue'
+import Explore from '@/pages/Explore.vue'
+import LoginView from '@/pages/LoginView.vue'
+import AddressView from '@/pages/AddressView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +40,16 @@ const router = createRouter({
       path: '/explore',
       name: 'explore',
       component: Explore
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/address',
+      name: 'address',
+      component: AddressView
     }
   ]
 })

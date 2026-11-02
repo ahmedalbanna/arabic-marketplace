@@ -66,7 +66,7 @@
                 <span class="old-price" v-if="product.oldPrice">{{ product.oldPrice.toLocaleString() }} ر.ي</span>
               </div>
             </div>
-            <button class="add-to-cart" @click.stop="addToCart">أضف للسلة</button>
+            <button class="add-to-cart" @click.stop="addToCart(product.id)">أضف للسلة</button>
           </div>
         </div>
       </section>
@@ -94,23 +94,24 @@ const router = useRouter()
 const categories = ref([
   { id: 1, name: 'إلكترونيات' },
   { id: 2, name: 'أزياء وملابس' },
-  { id: 3, name: 'منتجات بلدية وعسل يمني' },
+  { id: 3, name: 'عسل ومنتجات بلدية' },
   { id: 4, name: 'بن يمني أصيل' },
   { id: 5, name: 'عطور وبخور' },
   { id: 6, name: 'مستلزمات المنزل' },
 ])
 
 const products = ref([
-  { id: 1, name: 'هاتف سامسونج جالاكسي S24', price: 150000, oldPrice: 250000, rating: 23, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600' },
-  { id: 2, name: 'بن خولاني يمني فاخر (درجة أولى 1 كجم)', price: 18000, rating: 48, image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600' },
-  { id: 3, name: 'سماعات لاسلكية برو', price: 12000, oldPrice: 24000, rating: 35, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600' },
-  { id: 4, name: 'ساعة ذكية أبل', price: 320000, rating: 52, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600' },
+  { id: 1, name: 'هاتف سامسونج جالاكسي S24', price: 150000, oldPrice: 250000, rating: 4.9, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600' },
+  { id: 2, name: 'بن خولاني يمني فاخر (درجة أولى 1 كجم)', price: 18000, rating: 5.0, image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600' },
+  { id: 3, name: 'سماعات لاسلكية برو', price: 12000, oldPrice: 24000, rating: 4.8, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600' },
+  { id: 4, name: 'ساعة ذكية أبل', price: 320000, rating: 4.7, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600' },
 ])
 
 const goToProduct = (id: number) => router.push(`/product/${id}`)
 const goToCart = () => router.push('/cart')
 const goToVendor = () => router.push('/vendor')
-const addToCart = () => alert('تم إضافة المنتج للسلة')
+const goToExplore = () => router.push('/explore')
+const addToCart = (id: number) => alert('تمت إضافة المنتج للسلة')
 </script>
 
 <style scoped>
@@ -444,5 +445,3 @@ const addToCart = () => alert('تم إضافة المنتج للسلة')
   color: var(--color-on-secondary);
 }
 </style>
-EOF
-echo "done"

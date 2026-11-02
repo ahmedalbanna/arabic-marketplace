@@ -1,104 +1,352 @@
 <template>
-  <div class="home">
-    <!-- Header -->
-    <header class="header">
-      <div class="header-top">
-        <button class="menu-btn">☰</button>
-        <div class="logo">سوق اليمن</div>
-      </div>
-      <div class="search-section">
-        <div class="search-bar">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="ابحث عن المنتجات أو المتاجر..." />
+  <div class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen">
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe">
+      <div class="h-16 px-margin flex items-center justify-between">
+        <div class="flex items-center gap-space-sm">
+          <img
+            alt="Souq Yemen Logo"
+            class="h-8 w-auto object-contain"
+            src="https://lh3.googleusercontent.com/aida/AEtjO1XQYn51TQWwaNuK--iOATEA97bPvlLsHUPfLmI6Vz_4lpwX9Pki9q4OVcE_a2CGZPSAQ0eGbCY_Yp3wvqPlci3C7GL04nU02xG-9WHeSoLXBYCnZcgqH5HlP4MdlWgeoYaHD567H0IHwgvGD0g5kPNCTgNgOqj55piU-CdNi_f191vXb4lfY_x_cyOToZ1Q6lSXixCSqFT6Wyls4uegAAm4riq-EVKJ5Q88447essjAJA"
+          />
+          <div class="flex flex-col truncate">
+            <span class="font-label-md text-label-md text-text-primary leading-tight">سوق اليمن</span>
+            <span class="font-label-sm text-label-sm text-text-secondary leading-none">Home</span>
+          </div>
         </div>
-        <button class="filter-btn">⚙️</button>
+        <div class="flex items-center gap-space-xs">
+          <a
+            aria-label="بحث"
+            class="w-11 h-11 flex items-center justify-center text-text-primary hover:text-primary transition-colors"
+            data-path="explore-categories"
+            href="#"
+            @click.prevent="goToExplore"
+          >
+            <span class="material-symbols-outlined text-[24px]">search</span>
+          </a>
+          <a
+            aria-label="السلة"
+            class="relative w-11 h-11 flex items-center justify-center text-text-primary hover:text-primary transition-colors"
+            data-path="cart"
+            href="#"
+            @click.prevent="goToCart"
+          >
+            <span class="material-symbols-outlined text-[24px]">shopping_bag</span>
+            <span
+              class="absolute top-2 left-2 min-w-[18px] h-[18px] px-1 bg-primary text-on-primary font-label-sm text-[10px] rounded-full flex items-center justify-center font-bold"
+            >
+              3
+            </span>
+          </a>
+          <a
+            aria-label="الملف الشخصي المتجر"
+            class="w-11 h-11 flex items-center justify-center pl-1"
+            data-path="merchant-dashboard"
+            href="#"
+            @click.prevent="goToVendor"
+          >
+            <img
+              alt="Profile"
+              class="w-8 h-8 rounded-full object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKDznxjYmt_EwdtjrqhKKmk06HVlGVXv4esu1Iu8Ab2MToN_SPWdKtmRdGd6DhTxQQa7ZonD1WOYmbIRMz2QuVCMspu6ssj_MPZYLflObkc0HiQ8S2N4do0rBl3-sldsSY6ad_e2nbyBsnCzy-hNg8jSk__5FGqts7o13P4_y-aLVXi8TLuaW74EvByaT4OYlFNdiher8loaxqu4G9dJ4ezUfMKQgRoPX84V54eb-s"
+            />
+          </a>
+        </div>
       </div>
     </header>
 
-    <!-- Hero Banner -->
-    <section class="hero-banner">
-      <div class="hero-content">
-        <h2>منصة تجارية يمنية رائدة</h2>
-        <p>تسوق بأمان وسهولة من أفضل التجار المحليين</p>
-        <div class="hero-actions">
-          <button class="btn-primary">تصفح العروض</button>
-          <button class="btn-outline">كن بائعاً معنا</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Categories -->
-    <section class="categories-section">
-      <h3 class="section-title">الأقسام</h3>
-      <div class="categories-scroll">
-        <div class="category-item" v-for="cat in categories" :key="cat.id" @click="goToExplore">
-          <div class="category-icon">{{ cat.icon }}</div>
-          <span class="category-name">{{ cat.name }}</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Featured Products -->
-    <section class="products-section">
-      <h3 class="section-title">منتجات مميزة</h3>
-      <div class="product-grid">
-        <div class="product-card" v-for="product in products" :key="product.id" @click="goToProduct(product.id)">
-          <img :src="product.image" :alt="product.name" class="product-image" />
-          <div class="product-info">
-            <p class="product-name">{{ product.name }}</p>
-            <div class="product-rating">
-              <span>⭐⭐⭐⭐⭐</span>
-              <span class="rating-count">({{ product.rating }})</span>
+    <main class="flex flex-col relative w-full pt-16 pb-20 bg-background">
+      <div class="flex flex-col w-full pb-8 space-y-5">
+        <!-- Search & Filter Bar -->
+        <div class="px-margin pt-2">
+          <div class="flex items-center gap-space-sm bg-surface-container-low p-1.5 rounded-xl shadow-sm">
+            <div class="flex-1 flex items-center gap-space-sm bg-surface-container-lowest px-3 py-2 rounded-lg">
+              <span class="material-symbols-outlined text-text-muted text-[22px]">search</span>
+              <input
+                class="w-full bg-transparent text-text-primary font-body-md text-body-md placeholder:text-text-muted focus:outline-none"
+                placeholder="ابحث عن المنتجات أو المتاجر..."
+                type="text"
+              />
             </div>
-            <div class="product-price">
-              <span class="price">{{ product.price.toLocaleString() }} ر.ي</span>
+            <button
+              aria-label="خيارات التصفية"
+              class="flex items-center justify-center w-11 h-11 bg-primary-fixed text-on-primary-fixed rounded-lg transition-transform active:scale-95"
+              type="button"
+            >
+              <span class="material-symbols-outlined text-[20px]">tune</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Hero Promotional Banner -->
+        <div class="px-margin">
+          <div class="relative overflow-hidden rounded-xl bg-gradient-to-l from-primary-container to-primary text-on-primary p-5 shadow-md">
+            <div class="absolute -left-10 -bottom-10 w-36 h-36 bg-surface-container-lowest/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col space-y-3">
+              <div class="inline-flex items-center gap-1.5 self-start px-2.5 py-1 bg-surface-container-lowest/20 backdrop-blur-md rounded-full text-on-primary font-label-sm text-label-sm">
+                <span class="material-symbols-outlined text-[14px]">verified</span>
+                <span>ضمان وأمان الدفع المحلي</span>
+              </div>
+              <div class="space-y-1">
+                <h2 class="font-headline-lg-mobile text-headline-lg-mobile leading-tight text-on-primary font-bold">
+                  منصة تجارية يمنية رائدة
+                </h2>
+                <p class="font-body-sm text-body-sm text-on-primary/90 leading-relaxed max-w-[280px]">
+                  تسوق بأمان وسهولة من أفضل التجار المحليين مع توصيل موثوق لكافة المدن.
+                </p>
+              </div>
+              <div class="flex items-center gap-space-sm pt-1">
+                <button
+                  class="flex items-center justify-center px-4 py-2.5 bg-surface-container-lowest text-primary rounded-lg font-label-md text-label-md shadow-sm active:scale-95 transition-transform"
+                  type="button"
+                >
+                  تصفح العروض
+                </button>
+                <button
+                  class="flex items-center justify-center px-4 py-2.5 bg-on-primary/10 text-on-primary rounded-lg font-label-md text-label-md backdrop-blur-sm active:scale-95 transition-transform"
+                  type="button"
+                >
+                  كن بائعاً معنا
+                </button>
+              </div>
             </div>
-            <button class="add-to-cart" @click.stop="addToCart">أضف للسلة</button>
+          </div>
+        </div>
+
+        <!-- Categories Horizontal Scroll -->
+        <div class="flex flex-col space-y-2.5">
+          <div class="flex items-center justify-between px-margin">
+            <h3 class="font-headline-sm text-headline-sm text-text-primary">التصنيفات الشائعة</h3>
+            <a
+              class="font-label-sm text-label-sm text-primary flex items-center gap-0.5"
+              href="#"
+              @click.prevent="goToExplore"
+            >
+              <span>عرض الكل</span>
+              <span class="material-symbols-outlined text-[14px]">chevron_left</span>
+            </a>
+          </div>
+          <div class="flex gap-space-sm overflow-x-auto px-margin no-scrollbar py-1">
+            <a
+              v-for="cat in categories"
+              :key="cat.id"
+              class="flex flex-col items-center flex-shrink-0 w-20 group"
+              href="#"
+              @click.prevent="goToExplore"
+            >
+              <div
+                class="w-14 h-14 rounded-full bg-primary-fixed/50 flex items-center justify-center text-primary group-active:scale-95 transition-transform shadow-sm"
+              >
+                <span class="material-symbols-outlined text-[26px]">{{ cat.icon }}</span>
+              </div>
+              <span class="font-label-sm text-label-sm text-text-primary text-center mt-1.5 truncate w-full">
+                {{ cat.name }}
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Flash Sale Card -->
+        <div class="px-margin">
+          <div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm relative overflow-hidden">
+            <div class="flex items-center justify-between pb-3">
+              <div class="flex items-center gap-1.5">
+                <div class="flex h-2.5 w-2.5 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-status-error opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-status-error"></span>
+                </div>
+                <h3 class="font-headline-sm text-headline-sm text-text-primary">عروض حصرية وخصومات</h3>
+              </div>
+              <span class="bg-status-error/10 text-status-error font-label-sm text-label-sm px-2 py-0.5 rounded-full font-bold">
+                -50% لفترة محدودة
+              </span>
+            </div>
+            <div class="flex gap-space-md items-center">
+              <div class="relative w-28 h-28 flex-shrink-0 bg-surface-container-low rounded-lg overflow-hidden">
+                <img
+                  class="w-full h-full object-cover"
+                  alt="سماعات لاسلكية برو"
+                  src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"
+                />
+              </div>
+              <div class="flex-1 flex flex-col justify-between h-28">
+                <div>
+                  <span class="font-label-sm text-label-sm text-text-muted">ملحقات رقمية</span>
+                  <h4 class="font-label-lg text-label-lg text-text-primary line-clamp-1">
+                    سماعات لاسلكية برو عازلة للصوت
+                  </h4>
+                  <div class="flex items-baseline gap-2 mt-1">
+                    <span class="font-headline-sm text-headline-sm text-status-error font-bold">
+                      12,000 <span class="text-xs font-normal">ر.ي</span>
+                    </span>
+                    <span class="font-body-sm text-body-sm text-text-muted line-through">24,000 ر.ي</span>
+                  </div>
+                </div>
+                <div class="space-y-1">
+                  <div class="flex justify-between items-center font-label-sm text-label-sm">
+                    <span class="text-text-secondary">تم بيع 78%</span>
+                    <span class="text-status-warning font-semibold">متبقي 6 قطع</span>
+                  </div>
+                  <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+                    <div class="bg-status-warning h-full rounded-full" style="width: 78%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Products Section -->
+        <div class="px-margin flex flex-col space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-text-primary">منتجات مميزة</h3>
+              <p class="font-body-sm text-body-sm text-text-secondary">
+                مختارة بعناية من أفضل المتاجر اليمنية
+              </p>
+            </div>
+            <a
+              class="font-label-sm text-label-sm text-primary flex items-center gap-0.5"
+              href="#"
+              @click.prevent="goToExplore"
+            >
+              <span>عرض الكل</span>
+              <span class="material-symbols-outlined text-[14px]">chevron_left</span>
+            </a>
+          </div>
+          <div class="grid grid-cols-2 gap-space-sm">
+            <div
+              v-for="product in products"
+              :key="product.id"
+              class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col justify-between"
+              @click="goToProduct(product.id)"
+            >
+              <div class="relative w-full aspect-square bg-surface-container-low overflow-hidden">
+                <img
+                  :src="product.image"
+                  :alt="product.name"
+                  class="w-full h-full object-cover"
+                />
+                <button
+                  aria-label="إضافة للمفضلة"
+                  class="absolute top-2 left-2 w-8 h-8 rounded-full bg-surface-container-lowest/80 backdrop-blur-sm flex items-center justify-center text-text-secondary hover:text-error transition-colors"
+                  type="button"
+                  @click.stop="toggleFavorite(product.id)"
+                >
+                  <span class="material-symbols-outlined text-[18px]">favorite</span>
+                </button>
+                <span
+                  v-if="product.shipping"
+                  class="absolute bottom-2 right-2 bg-primary-container text-on-primary-container font-label-sm text-[10px] px-2 py-0.5 rounded"
+                >
+                  شحن مجاني
+                </span>
+              </div>
+              <div class="p-3 flex flex-col flex-1 justify-between space-y-2">
+                <div>
+                  <span class="font-label-sm text-label-sm text-text-muted">{{ product.category }}</span>
+                  <h4 class="font-label-md text-label-md text-text-primary line-clamp-2 leading-snug">
+                    {{ product.name }}
+                  </h4>
+                  <div class="flex items-center gap-1 mt-1 text-status-warning">
+                    <span
+                      class="material-symbols-outlined text-[16px]"
+                      style="font-variation-settings: 'FILL' 1;"
+                    >
+                      star
+                    </span>
+                    <span class="font-label-sm text-label-sm font-bold text-text-primary">
+                      {{ product.rating }}
+                    </span>
+                    <span class="font-body-sm text-body-sm text-text-muted">({{ product.reviews }})</span>
+                  </div>
+                </div>
+                <div class="pt-1">
+                  <div class="font-headline-sm text-headline-sm text-text-primary font-bold">
+                    {{ product.price.toLocaleString() }}
+                    <span class="text-xs font-normal text-text-secondary">ر.ي</span>
+                  </div>
+                  <button
+                    class="w-full mt-2 py-2 px-2 bg-primary text-on-primary rounded-lg font-label-sm text-label-sm flex items-center justify-center gap-1 active:scale-95 transition-transform"
+                    type="button"
+                    @click.stop="addToCart(product.id)"
+                  >
+                    <span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>
+                    <span>أضف للسلة</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust Badges & Local Assurance Section -->
+        <div class="px-margin pt-2">
+          <div class="bg-surface-container-low rounded-xl p-3 flex justify-around items-center text-center">
+            <div class="flex flex-col items-center">
+              <span class="material-symbols-outlined text-primary text-[24px]">verified_user</span>
+              <span class="font-label-sm text-label-sm text-text-primary mt-1">دفع آمن ومحمي</span>
+            </div>
+            <div class="w-px h-8 bg-border"></div>
+            <div class="flex flex-col items-center">
+              <span class="material-symbols-outlined text-status-success text-[24px]">local_shipping</span>
+              <span class="font-label-sm text-label-sm text-text-primary mt-1">توصيل سريع</span>
+            </div>
+            <div class="w-px h-8 bg-border"></div>
+            <div class="flex flex-col items-center">
+              <span class="material-symbols-outlined text-tertiary text-[24px]">support_agent</span>
+              <span class="font-label-sm text-label-sm text-text-primary mt-1">دعم متواصل 24/7</span>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </main>
 
-    <!-- Flash Sale -->
-    <section class="flash-sale">
-      <div class="flash-header">
-        <h3>عروض حصرية وخصومات</h3>
-        <span class="flash-badge">-50% خصم لفترة محدودة</span>
+    <nav
+      class="fixed bottom-0 w-full z-50 pb-safe bg-background/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]"
+      data-active-classes="text-primary font-bold"
+    >
+      <div class="flex justify-around items-center h-16 px-space-xs">
+        <a
+          class="flex flex-col items-center justify-center min-w-[56px] h-12 transition-all text-primary font-bold"
+          data-path="home"
+          href="#"
+        >
+          <span class="material-symbols-outlined text-[24px]">home</span>
+          <span class="font-label-sm text-label-sm mt-0.5">الرئيسية</span>
+        </a>
+        <a
+          class="flex flex-col items-center justify-center min-w-[56px] h-12 text-text-secondary transition-all"
+          data-path="explore-categories"
+          href="#"
+          @click.prevent="goToExplore"
+        >
+          <span class="material-symbols-outlined text-[24px]">explore</span>
+          <span class="font-label-sm text-label-sm mt-0.5">استكشاف</span>
+        </a>
+        <a
+          class="relative flex flex-col items-center justify-center min-w-[56px] h-12 text-text-secondary transition-all"
+          data-path="cart"
+          href="#"
+          @click.prevent="goToCart"
+        >
+          <span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+          <span
+            class="absolute top-1 right-3 min-w-[16px] h-[16px] px-0.5 bg-primary text-on-primary font-label-sm text-[9px] rounded-full flex items-center justify-center font-bold"
+          >
+            3
+          </span>
+          <span class="font-label-sm text-label-sm mt-0.5">السلة</span>
+        </a>
+        <a
+          class="flex flex-col items-center justify-center min-w-[56px] h-12 text-text-secondary transition-all"
+          data-path="merchant-dashboard"
+          href="#"
+          @click.prevent="goToVendor"
+        >
+          <span class="material-symbols-outlined text-[24px]">storefront</span>
+          <span class="font-label-sm text-label-sm mt-0.5">المتجر</span>
+        </a>
       </div>
-      <div class="flash-card">
-        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" alt="سماعات لاسلكية" />
-        <div class="flash-info">
-          <p class="flash-name">سماعات لاسلكية برو</p>
-          <div class="flash-prices">
-            <span class="flash-price">12,000 ر.ي</span>
-            <span class="flash-old-price">24,000 ر.ي</span>
-          </div>
-          <div class="flash-progress">
-            <div class="progress-bar"></div>
-          </div>
-          <p class="flash-stock">الكمية المتبقية محدودة</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Bottom Nav -->
-    <nav class="bottom-nav">
-      <button class="nav-item active">
-        <span>🏠</span>
-        <span>الرئيسية</span>
-      </button>
-      <button class="nav-item" @click="goToExplore">
-        <span>🔍</span>
-        <span>الأقسام</span>
-      </button>
-      <button class="nav-item" @click="goToCart">
-        <span>🛒</span>
-        <span>السلة</span>
-      </button>
-      <button class="nav-item" @click="goToVendor">
-        <span>👤</span>
-        <span>حسابي</span>
-      </button>
     </nav>
   </div>
 </template>
@@ -110,366 +358,46 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const categories = ref([
-  { id: 1, name: 'إلكترونيات', icon: '📱' },
-  { id: 2, name: 'أزياء وملابس', icon: '👕' },
-  { id: 3, name: 'منتجات بلدية وعسل يمني', icon: '🍯' },
-  { id: 4, name: 'بن يمني أصيل', icon: '☕' },
-  { id: 5, name: 'عطور وبخور', icon: '💄' },
-  { id: 6, name: 'مستلزمات المنزل', icon: '🏠' },
+  { id: 1, name: 'إلكترونيات', icon: 'devices' },
+  { id: 2, name: 'أزياء وملابس', icon: 'apparel' },
+  { id: 3, name: 'عسل ومنتجات بلدية', icon: 'hive' },
+  { id: 4, name: 'بن يمني أصيل', icon: 'coffee' },
+  { id: 5, name: 'عطور وبخور', icon: 'local_florist' },
+  { id: 6, name: 'مستلزمات منزل', icon: 'chair' },
 ])
 
 const products = ref([
-  { id: 1, name: 'هاتف سامسونج جالاكسي S24', price: 150000, rating: 23, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400' },
-  { id: 2, name: 'بن خولاني يمني فاخر (درجة أولى 1 كجم)', price: 18000, rating: 48, image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400' },
+  {
+    id: 1,
+    name: 'هاتف سامسونج جالاكسي S24 فائق السرعة',
+    price: 150000,
+    rating: 4.9,
+    reviews: 23,
+    category: 'هواتف ذكية',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400',
+    shipping: true,
+  },
+  {
+    id: 2,
+    name: 'بن خولاني يمني فاخر (درجة أولى 1 كجم)',
+    price: 18000,
+    rating: 5.0,
+    reviews: 48,
+    category: 'محاصيل يمنية',
+    image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400',
+    shipping: false,
+  },
 ])
 
 const goToProduct = (id: number) => router.push(`/product/${id}`)
 const goToCart = () => router.push('/cart')
 const goToExplore = () => router.push('/explore')
 const goToVendor = () => router.push('/vendor')
-const addToCart = () => {
+const addToCart = (id: number) => {
   alert('تم إضافة المنتج للسلة')
+  router.push('/cart')
+}
+const toggleFavorite = (id: number) => {
+  alert('تم إضافة المنتج للمفضلة')
 }
 </script>
-
-<style scoped>
-.home {
-  padding-bottom: 80px;
-  background-color: var(--color-surface);
-  min-height: 100vh;
-}
-
-.header {
-  background-color: var(--color-surface-container-lowest);
-  padding: var(--space-md);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.header-top {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-}
-
-.menu-btn, .filter-btn {
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
-  padding: var(--space-xs);
-}
-
-.logo {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--color-primary);
-}
-
-.search-section {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.search-bar {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  background-color: var(--color-surface-container);
-  border-radius: var(--radius-default);
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-border);
-}
-
-.search-icon {
-  font-size: 1.1rem;
-}
-
-.search-bar input {
-  flex: 1;
-  border: none;
-  background: none;
-  font-family: var(--font-family);
-  font-size: 0.9rem;
-  outline: none;
-}
-
-.hero-banner {
-  margin: var(--space-md);
-  background: linear-gradient(135deg, var(--color-primary) 0%, #1976D2 100%);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  color: var(--color-on-primary);
-}
-
-.hero-content h2 {
-  margin: 0 0 var(--space-xs) 0;
-  font-size: 1.3rem;
-}
-
-.hero-content p {
-  margin: 0 0 var(--space-md) 0;
-  font-size: 0.9rem;
-  opacity: 0.95;
-}
-
-.hero-actions {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.btn-primary, .btn-outline {
-  padding: var(--space-sm) var(--space-md);
-  border: none;
-  border-radius: var(--radius-default);
-  font-family: var(--font-family);
-  font-size: 0.875rem;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: var(--color-secondary);
-  color: var(--color-on-secondary);
-}
-
-.btn-outline {
-  background-color: transparent;
-  color: var(--color-on-primary);
-  border: 1.5px solid var(--color-on-primary);
-}
-
-.categories-section {
-  padding: var(--space-md);
-}
-
-.section-title {
-  margin: 0 0 var(--space-md) 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.categories-scroll {
-  display: flex;
-  gap: var(--space-md);
-  overflow-x: auto;
-  padding-bottom: var(--space-xs);
-}
-
-.category-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xs);
-  min-width: 70px;
-  cursor: pointer;
-}
-
-.category-icon {
-  width: 60px;
-  height: 60px;
-  background-color: var(--color-surface-container-lowest);
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-}
-
-.category-name {
-  font-size: 0.75rem;
-  text-align: center;
-  color: var(--color-text-primary);
-}
-
-.products-section {
-  padding: 0 var(--space-md) var(--space-md);
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
-}
-
-.product-card {
-  background-color: var(--color-surface-container-lowest);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-}
-
-.product-image {
-  width: 100%;
-  height: 130px;
-  object-fit: cover;
-}
-
-.product-info {
-  padding: var(--space-sm);
-}
-
-.product-name {
-  margin: 0 0 var(--space-xs) 0;
-  font-size: 0.8rem;
-  line-height: 1.4;
-  height: 35px;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.product-rating {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-xs);
-  font-size: 0.7rem;
-}
-
-.rating-count {
-  color: var(--color-text-secondary);
-}
-
-.product-price {
-  margin-bottom: var(--space-xs);
-}
-
-.price {
-  color: var(--color-primary);
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.add-to-cart {
-  width: 100%;
-  padding: var(--space-xs);
-  background-color: var(--color-secondary);
-  color: var(--color-on-secondary);
-  border: none;
-  border-radius: var(--radius-default);
-  font-family: var(--font-family);
-  font-size: 0.8rem;
-  cursor: pointer;
-}
-
-.flash-sale {
-  margin: 0 var(--space-md) var(--space-md);
-}
-
-.flash-header {
-  margin-bottom: var(--space-sm);
-}
-
-.flash-header h3 {
-  margin: 0 0 var(--space-xs) 0;
-  font-size: 1.1rem;
-}
-
-.flash-badge {
-  background-color: var(--color-status-error);
-  color: var(--color-on-primary);
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-}
-
-.flash-card {
-  display: flex;
-  gap: var(--space-sm);
-  background-color: var(--color-surface-container-lowest);
-  padding: var(--space-sm);
-  border-radius: var(--radius-lg);
-  border: 2px solid var(--color-status-error);
-}
-
-.flash-card img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: var(--radius-default);
-}
-
-.flash-info {
-  flex: 1;
-}
-
-.flash-name {
-  margin: 0 0 var(--space-xs) 0;
-  font-size: 0.9rem;
-}
-
-.flash-prices {
-  display: flex;
-  gap: var(--space-sm);
-  align-items: center;
-  margin-bottom: var(--space-xs);
-}
-
-.flash-price {
-  color: var(--color-status-error);
-  font-weight: 600;
-}
-
-.flash-old-price {
-  color: var(--color-text-muted);
-  text-decoration: line-through;
-  font-size: 0.8rem;
-}
-
-.flash-progress {
-  width: 100%;
-  height: 6px;
-  background-color: var(--color-surface-container);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  margin-bottom: var(--space-xs);
-}
-
-.progress-bar {
-  width: 30%;
-  height: 100%;
-  background-color: var(--color-status-error);
-}
-
-.flash-stock {
-  margin: 0;
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--color-surface-container-lowest);
-  border-top: 1px solid var(--color-border);
-  display: flex;
-  justify-content: space-around;
-  padding: var(--space-xs) 0 calc(var(--space-xs) + env(safe-area-inset-bottom, 0));
-}
-
-.nav-item {
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  font-size: 0.7rem;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  font-family: var(--font-family);
-  flex: 1;
-}
-
-.nav-item.active {
-  color: var(--color-primary);
-}
-</style>
-EOF
-echo "done"
