@@ -1,0 +1,13 @@
+{
+  "projectId": "12283171032188823946",
+  "title": "Arabic Mobile Marketplace Design System",
+  "deviceType": "MOBILE",
+  "Last Sync Time": "2026-11-02T20:52:10Z",
+  "screens": {
+    "home": {"id": "a0fa819585884ee9887acd9a97c2b0e0", "label": "Mobile Home Screen"},
+    "productDetails": {"id": "9281125e150c4a7595ea0d3438fd71f9", "label": "Mobile Product Details"},
+    "cart": {"id": "73c350de05ac468b8afd58aadd6df5ed", "label": "Mobile Cart"},
+    "checkout": {"id": "d6b0a9cdc50642ce9f254cabef0b4c03", "label": "Mobile Checkout"},
+    "vendorDashboard": {"id": "4dbb861962e3406e85e031bee524ba6c", "label": "Mobile Vendor Dashboard"}
+  }
+}
